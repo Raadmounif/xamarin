@@ -1,0 +1,66 @@
+//android maainfest
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="testt.testt" android:versionCode="1" android:versionName="1.0">
+  <uses-sdk android:minSdkVersion="16" />
+  <application android:label="youtube view"> android:theme="@style/MyCustomTheme">
+  </application>
+</manifest>
+//styles
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+  <!-- Inherit from the light Material Theme -->
+  <style name="MyCustomTheme" parent="android:Theme.Material.Light">
+    <!-- Override the app bar color -->
+    <item name="android:colorPrimary">@color/green</item>
+    <!-- Override the color of UI controls -->
+    <item name="android:colorAccent">@color/white</item>
+    <item name="android:statusBarColor">@color/orange</item>
+  </style>
+</resources>
+//main activity
+namespace testt
+{
+    [Activity(Label = "youtube view", MainLauncher = true, Icon = "@drawable/rd", Theme = "@style/MyCustomTheme")]
+    public class MainActivity : Activity
+    {
+        int count = 1;
+
+        protected override void OnCreate(Bundle bundle)
+        {
+            base.OnCreate(bundle);
+
+       
+            SetContentView(Resource.Layout.Main);
+
+            Button MyButton = FindViewById<Button>(Resource.Id.MyButton);
+            var button1 = FindViewById<Button>(Resource.Id.button1);
+            var webview = FindViewById<WebView>(Resource.Id.webView1);
+            webview.Settings.JavaScriptEnabled = true;
+            webview.LoadUrl(" http://www.youtube.com/  ");
+            webview.Settings.LoadWithOverviewMode = true;
+            webview.SetWebViewClient(new HelloWebViewClient());
+
+            MyButton.Click += delegate { webview.GoBack(); };
+            button1.Click += delegate { webview.GoForward(); };
+        }
+
+      
+}
+   
+
+    public class HelloWebViewClient : WebViewClient
+        {
+            public override bool ShouldOverrideUrlLoading(WebView view, string url)
+            {
+                view.LoadUrl(url);
+                return true;
+            }
+            public override void OnPageFinished(WebView view, string url)
+            {
+
+            }
+        }
+    }
+
+
+//
